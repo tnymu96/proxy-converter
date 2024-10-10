@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy Converter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+		h3, h3 a, h4, h4 a {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #007bff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+		h3 a {
+			color: red;
+			text-decoration: none;
+		}
+		h5 {
+			text-align: center;
+			font-size: 20px;
+			margin: 10px 0;
+		}
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            resize: none;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            textarea {
+                height: 120px;
+            }
+            button {
+                padding: 10px;
+            }
+            h2 {
+                font-size: 22px;
+            }
+            label {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Proxy Converter</h2>
+
+        <label for="input">Đầu vào định dạng: IP:Port:UserName:Password</label>
+        <textarea id="input" placeholder="Mỗi Proxy là 1 dòng nhé"></textarea>
+
+        <button onclick="convert()" style="margin-bottom:25px;">Convert</button>
+
+        <label for="output">Đầu ra định dạng: http://UserName:Password@IP:Port</label>
+        <textarea id="output" readonly placeholder=""></textarea>
+		
+		<h3>Developer by <a target="_blank" href="https://t.me/trinhnhuy">Ý Trịnh</a></h3>
+		<h4>Nhận dạy code, bán, code thuê script GPM, NodeJs chạy các kèo Airdrop!</h3>
+		<h5>Telegram: <a target="_blank" href="https://t.me/trinhnhuy">@trinhnhuy</a></h3>
+    </div>
+
+    <script>
+        function convert() {
+            // Lấy giá trị input từ textarea và chia theo dòng
+            const input = document.getElementById('input').value.trim();
+            const lines = input.split('\n'); // Chia các dòng proxy
+
+            let result = '';
+
+            lines.forEach(line => {
+                const parts = line.split(':'); // Tách chuỗi từng dòng theo dấu ':'
+
+                // Kiểm tra nếu đủ 4 phần: IP, Port, Username, Password
+                if (parts.length === 4) {
+                    const ip = parts[0];
+                    const port = parts[1];
+                    const username = parts[2];
+                    const password = parts[3];
+
+                    // Tạo ra định dạng URL
+                    result += `http://${username}:${password}@${ip}:${port}\n`; // Gộp từng kết quả vào chuỗi output
+                } else {
+                    result += `Input không hợp lệ cho dòng: ${line}\n`; // Thêm thông báo nếu input sai
+                }
+            });
+
+            // Đặt kết quả vào textarea output
+            document.getElementById('output').value = result.trim(); // Xóa dòng trống cuối cùng
+        }
+    </script>
+
+</body>
+</html>
